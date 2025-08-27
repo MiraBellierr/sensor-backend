@@ -6,6 +6,7 @@ const PORT = 3002;
 
 // Store temperature in memory
 let temp = 0;
+let current = "Laser is currently IDLE";
 
 // Middleware
 app.use(cors());              // Enable CORS
@@ -23,9 +24,20 @@ app.post("/temp", (req, res) => {
     res.json({ message: "Temperature updated successfully", temp });
 });
 
+app.post("/current", (req, res) => {
+    const { current: newCurrent } = req.body;
+
+    current = newCurrent;
+    res.json({ message: "Current updated successfully", current});
+})
+
 // Route to get temperature
 app.get("/gettemp", (req, res) => {
     res.json({ temp: `${temp} Celsius` });
+});
+
+app.get("/getCurrent", (req, res) => {
+    res.json({ current });
 });
 
 // Root route (optional)
